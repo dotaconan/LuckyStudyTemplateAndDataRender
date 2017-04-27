@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>React MVVM__数据与模版渲染</title>
+    <link rel="stylesheet" href="../lib/css/doc.css"/>
+</head>
+<body>
+<article class="markdown-body">
+    <h1>React__数据与模版渲染</h1>
+    <h2>1.背景描述</h2>
+    <p>本案例中的列表就是通过服务器端加载</p>
+    <h2>2.场景案例</h2>
+    <p>先通过异步加载列表数据，根据数据渲染列表</p>
+    <h3>2.1服务器端获取的Json数据</h3>
+    <section>
+        <div id="testDataFromServer" class="J-demo-data"></div>
+        <h3>2.2页面根据数据渲染列表</h3>
+        <div id="" class="J-demo-result">
+            <ul id="testDataFromServerResult"></ul>
+        </div>
+        <div id="example"></div>
+        <div id="container"></div>
+    </section>
+    <h2>操作演示</h2>
+    <div id="reactOperation"></div>
+    <h2>操作记录</h2>
+    <ul id="actionRecord"></ul>
+</article>
+
+<script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/lib/react/react.min.js"></script>
+<script type="text/javascript" src="js/lib/react/JSXTransformer.js"></script>
+<script type="text/javascript" src="js/lib/react/react-dom.min.js"></script>
+<script type="text/javascript" src="js/lib/react/babel.min.js"></script>
+<script type="text/javascript" src="../lib/json2.js"></script>
+<script type="text/javascript" src="js/page/pageConfig.js"></script>
+<script type="text/javascript">
+    //当前首页
+    PageConfig.currentPage = PageConfig.PageType.StepThirdMVVM.react;
+</script>
+<script type="text/javascript" src="js/page/page-demo-index.js"></script>
+<script type="text/babel">
+    function PageReactInit() {
+        var PageDemoObj = window.PageDemo;
+        var PageDemoObjList = {
+            list: PageDemoObj.cache.list
+        };
+        console.log(PageDemoObj);
+        //test reactDOM
+        ReactDOM.render(
+                <h1>Hello, world by React!</h1>,
+                document.getElementById('example')
+        );
+
+
+        //
+        var BookOperation = React.createClass({
+            handleDelete: function () {
+                console.log(this.props.list.PageDemoObjList.list);
+                PageConfig.appendRecord("<strong>旧数据</strong>    " + JSON.stringify(this.props.list.PageDemoObjList.list));
+
+
+                //删除第一行数据
+                this.props.list.PageDemoObjList.list.shift();
+
+                this.setState({
+                    list: this.props.list
+                });
+
+                //删除后将选中为倒数第二个选中
+                var length = this.props.list.PageDemoObjList.list.length;
+                if (length > 1) {
+                    this.props.activeId = this.props.list.PageDemoObjList.list[length - 2].id;
+                    this.setState({
+                        activeId: this.props.list.PageDemoObjList.list[length - 2].id
+                    });
+                }
+
+
+                PageConfig.appendRecord("<strong>新数据</strong>    " + JSON.stringify(this.props.list.PageDemoObjList.list));
+                console.log(this.props.list.PageDemoObjList.list);
+            },
+            handleAddItem: function () {
+                PageConfig.appendRecord("<strong>旧数据</strong>    " + JSON.stringify(this.props.list.PageDemoObjList.list));
+
+                var newId = "10" + Math.floor(Math.random() * 50);
+                //删除第一行数据
+                this.props.list.PageDemoObjList.list.push({
+                    id: newId,
+                    names: "name" + Math.floor(Math.random() * 50)
+                });
+                this.props.activeId = newId;
+                //设置当前选中为新增加的
+                this.setState({
+                    activeId: newId
+                });
+                console.log(this);
+                PageConfig.appendRecord("<strong>新数据</strong>    " + JSON.stringify(this.props.list.PageDemoObjList.list));
+            },
+            render: function () {
+                console.log("BookOperation render >>     ", this.props);
+
+                return (
+                        <div>
+                            <ul id="reactBookList">
+                                {
+                                    // {/* 遍历数据 */}
+                                    this.props.list.PageDemoObjList.list.map(function (item, i) {
+                                        return (
+
+                                                <li className={item.id == this.props.activeId ? "red" : ""}>
+                                                    {item.id}.{item.names}
+                                                </li>
+                                        );
+                                    }.bind(this)) // {/* 绑定函数的执行this - 以便 this.handleDel */}
+
+                                }
+                            </ul>
+                            <ul className="demo-react-list">
+                                <li>
+                                    <a className="J-react-del-item" href="javascript:void(0)" onClick={this.handleDelete}>react删除列表第一行数据数据并重新渲染</a>
+                                </li>
+                                <li>
+                                    <a className="J-react-add-item" href="javascript:void(0)" onClick={this.handleAddItem}>react增加一行数据数据并重新渲染</a>
+                                </li>
+                            </ul>
+                        </div>
+                );
+            }
+        });
+        ReactDOM.render(
+                <BookOperation activeId="02" list={{PageDemoObjList}}/>, document.getElementById('reactOperation'));
+    }
+</script>
+</body>
+</html>

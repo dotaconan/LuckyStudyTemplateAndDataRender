@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Backbone__数据与模版渲染</title>
+    <link rel="stylesheet" href="../lib/css/doc.css"/>
+</head>
+<body>
+<article class="markdown-body">
+    <h1>Backbone渲染__数据与模版渲染</h1>
+    <h2>1.背景描述</h2>
+    <p>本案例中的列表就是通过服务器端加载</p>
+    <h2>2.场景案例</h2>
+    <p>先通过异步加载列表数据，根据数据渲染列表</p>
+    <h3>2.1服务器端获取的Json数据</h3>
+    <section>
+        <div id="testDataFromServer" class="J-demo-data"></div>
+        <h3>2.2页面根据数据渲染列表</h3>
+        <div id="" class="J-demo-result">
+            <ul id="testDataFromServerResult">
+                <template v-for="(item,index) in items">
+                    <div class="list-item list-item-catg J-list-item" v-bind:data-index="index">
+                        <span class="J-field-id luckyui-hide">{{ '{{' }} item[0].id {{ '}}' }}</span>
+                        <span class="list-item-text J-field-text">{{ '{{' }} item[0].text {{ '}}' }}</span>
+                    </div>
+                </template>
+            </ul>
+        </div>
+    </section>
+    <h2>操作演示</h2>
+    <ul>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="del" data-rel="backbone">删除列表第一行数据数据并重新渲染</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="add" data-rel="backbone">增加一行数据数据并重新渲染</a>
+        </li>
+    </ul>
+    <h2>操作记录</h2>
+    <ul id="actionRecord"></ul>
+</article>
+
+<script type="text/template" id="tpl-backbone-list">
+    <% _.each(list, function (obj) { %>
+    <% if(obj.id=="04") %>
+    <li class="orange" data-id="<%= obj.id %>"><%= obj.id %>.<%= obj.name %></li>
+    <% else %>
+    <li data-id="<%= obj.id %>"><%= obj.id %>.<%= obj.name %></li>
+    <% }); %>
+</script>
+
+<script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../lib/json2.js"></script>
+<script type="text/javascript" src="js/lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="js/lib/backbone/backbone.js"></script>
+<script type="text/javascript" src="js/page/pageConfig.js"></script>
+<script type="text/javascript">
+    //当前首页
+    PageConfig.currentPage = PageConfig.PageType.StepSecondMVC.backbone;
+</script>
+<script type="text/javascript" src="js/page/page-demo-index.js"></script>
+</body>
+</html>

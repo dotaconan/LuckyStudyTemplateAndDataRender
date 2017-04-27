@@ -1,0 +1,25 @@
+{
+    "status": "OK",
+    "list": [
+        {
+            "id": "01",
+            "names": "Javascript"
+        },
+        {
+            "id": "02",
+            "names": "Css"
+        },
+        {
+            "id": "03",
+            "names": "Html"
+        },
+        {
+            "id": "04",
+            "names": "Less"
+        },
+        {
+            "id": "05",
+            "names": "Json"
+        }
+    ]
+}

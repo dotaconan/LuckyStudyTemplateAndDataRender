@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>数据与模版渲染概览 TemplateAndData (2017.02.16 lucheng)</title>
+    <link rel="stylesheet" href="../lib/css/doc.css"/>
+</head>
+<body>
+<article class="markdown-body">
+    <h1>数据与模版渲染 TemplateAndData (2017.02.16 lucheng)</h1>
+    <h2>1.背景描述</h2>
+    <blockquote>
+        前端领域，当我们需要把后端数据展现在页面时，都需要牵涉到逻辑数据到页面渲染的处理过程。
+        在前端技术发展中，数据与模版渲染之间的处理模式，出现了几个阶段的变革，从最原始的JS拼接字符串，再到MVC的数据、模版、控制层的双向绑定，再到MVVM数据驱动与模版融合的方式。配合现代浏览器演进对js属性变化高版本语言的支持，处理数据和模版更加便利。
+        <ul>
+            <li>
+                js拼接字符串
+            </li>
+            <li>
+                <p>模版引擎</p>
+                <ul>
+                    <li>
+                        artTemplate
+                    </li>
+                    <li>underscore</li>
+                </ul>
+            </li>
+            <li>
+                <p>MVC</p>
+                <ul>
+                    <li>
+                        Backbone
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p>MVVM</p>
+                <ul>
+                    <li>vue</li>
+                    <li>react</li>
+                </ul>
+            </li>
+        </ul>
+    </blockquote>
+    <h2>2.场景案例</h2>
+    <ol>
+        <li>服务器端获取数据</li>
+        <li>渲染列表</li>
+        <li>通过按钮删除、新增项目，删除、增加时重新设置选中class</li>
+    </ol>
+    <h3>2.1服务器端获取的Json数据</h3>
+    <section>
+        <div id="testDataFromServer" class="J-demo-data"></div>
+        <h3>2.2页面根据数据渲染列表</h3>
+        <div id="" class="J-demo-result">
+            <ul id="testDataFromServerResult"></ul>
+        </div>
+    </section>
+    <h2>操作演示</h2>
+    <ul>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="del" data-rel="jsConcat">删除列表第一行数据数据并重新渲染</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="add" data-rel="jsConcat">增加一行数据数据并重新渲染</a>
+        </li>
+    </ul>
+    <h3>2.3数据与模版渲染多种模式demo</h3>
+    <ul>
+        <li>
+            <h4>原始阶段</h4>
+            <blockquote>js对象中数据通过拼接为html字符串，再操作dom节点改变dom节点内容</blockquote>
+            <blockquote>特色：js处理方便自由简单，缺点：数据量大拼接难以维护修改麻烦,比如大量table数据的拼接</blockquote>
+            <ul>
+                <li>
+                    <a href="stepOriginJsConcat.html" target="_blank">JS字符串拼接</a>
+                </li>
+            </ul>
+        <li>
+            <h4>第一阶段：js模版渲染</h4>
+            <blockquote>通过数据传递给处理模版的js模版引擎库，得到渲染数据后的html字符串，再手动操作节点改变对应dom节点内容</blockquote>
+            <blockquote>特色：只需要维护模版和数据，并且可以控制渲染时机，且在nodejs服务器端更多便利，缺点：需要引入模版引擎和模版文件，手动进行下一步的更新UI操作</blockquote>
+            <ul>
+                <li>
+                    <a href="stepFirstJsTemplateArttemplate.html" target="_blank">artTemplate.js 渲染模版(兼容性：all)</a>
+                </li>
+                <li>
+                    <a href="stepFirstJsTemplateUnderscore.html" target="_blank">underscore.js 渲染模版(兼容性：all)</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>第二阶段：MVC双向自动绑定</p>
+            <blockquote>通过MVC库框架，为框架指定数据，按照格式编写DOM节点模版，当数据变动，对应UI页面自动渲染。闭环，双向绑定，UI变动也会对应数据变动</blockquote>
+            <blockquote>特色：双向绑定，只需要考虑数据和页面显示，所有事件MVC托管不会出现，缺点：闭环，不够灵活，学习成本大，但能高效运行后端业务系统</blockquote>
+            <ul>
+                <li>
+                    <a href="stepSecondMVCBackbone.html" target="_blank">backbone.js-MVC双向自动绑定(基于underscore兼容性：几乎all)</a>
+                </li>
+            </ul>
+
+        </li>
+        <li>
+            <p>第三阶段：MVVM自动绑定</p>
+            <blockquote>通过MVC库框架，为框架指定数据，按照格式编写DOM节点模版，当数据变动，对应UI页面自动渲染。单向数据驱动页面，只有数据变动才会UI变动</blockquote>
+            <blockquote>特色：单项数据流，数据驱动，多一层虚拟DOM，性能好，开发快，缺点：现代浏览器支持</blockquote>
+            <ul>
+                <li>
+                    <a href="stepThirdMVVMReact.html" target="_blank">react-MVVM自动绑定(兼容性：现代浏览器)</a>
+                </li>
+                <li>
+                    <a href="stepThirdMVVMVue.html" target="_blank">vue-MVVM自动绑定(兼容性：现代浏览器)</a>
+                </li>
+                <li>
+                    knockout.js-MVVM自动绑定(兼容性：all)
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <h2>总结</h2>
+    <p>
+       对于技术的使用一句话概括：不忘初心。数据和模版渲染，最初的目的是专注于处理数据业务，页面渲染方便。
+       经历了发展，最终的MVVM是结合了最初的数据决定展现，又融合了模版的思想，再加上高版本浏览器支持属性变动自动触发事件，自动处理变化后的UI，更智能化。
+    <p>
+       技术方法不存在对错，只存在好用和更好用。技术选型时：在兼容性要求高的场景可以选择保守好用的，对于移动端等兼容性要求不高的现代浏览器多使用最优的MVVM大大提高开发效率和业务处理
+    </p>
+    <h2>对React和Vue的个人使用感受</h2>
+    <ul>
+        <li>两者都是基于MVVM，支持现代化开发</li>
+        <li>vue:适合小应用，简单快速，保留了页面与数据分离思想，相当于模版引擎的增强版，如专题等业务相对单页面性质高，上手简单</li>
+        <li>react:适合中、大型应用，但性能高等特点，但由于托管了Dom会使得模版都在js中，上手相对复杂</li>
+    </ul>
+    <h2>友情链接</h2>
+    <ul>
+        <li>
+            <a href="github_doc.html" target="_blank">github markdown 样式</a>
+        </li>
+    </ul>
+    <h2>changelog</h2>
+    <ul>
+        <li>
+            <h4>2017.2.15</h4>
+            <ul>
+                <li>
+                    增加github的css友好样式，方便阅读
+                </li>
+                <li>
+                    增加字符串拼接、artTemplate、underscore、Backbone、Vue/react渲染同样列表的demo
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h4>2017.2.16</h4>
+            <ul>
+                <li>
+                    实现vue/react 删除列表项目，重新设置当前选中的项目为倒数第二项，增加项目后设置为新增加的项目
+                </li>
+            </ul>
+        </li>
+    </ul>
+</article>
+<script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../lib/json2.js"></script>
+<script type="text/javascript" src="js/page/pageConfig.js"></script>
+<script type="text/javascript">
+    //当前首页
+    PageConfig.currentPage = PageConfig.PageType.index;
+</script>
+<script type="text/javascript" src="js/page/page-demo-index.js"></script>
+</body>
+</html>

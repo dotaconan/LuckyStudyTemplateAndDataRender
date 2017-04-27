@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue MVVM__数据与模版渲染</title>
+    <link rel="stylesheet" href="../lib/css/doc.css"/>
+</head>
+<body>
+<article class="markdown-body">
+    <h1>Vue__数据与模版渲染</h1>
+    <h2>1.背景描述</h2>
+    <p>本案例中的列表就是通过服务器端加载</p>
+    <h2>2.场景案例</h2>
+    <p>先通过异步加载列表数据，根据数据渲染列表</p>
+    <h3>2.1服务器端获取的Json数据</h3>
+    <section>
+        <div id="testDataFromServer" class="J-demo-data"></div>
+        <h3>2.2页面根据数据渲染列表</h3>
+        <div id="" class="J-demo-result">
+            <ul id="testDataFromServerResult">
+                <template v-for="(item,index) in items">
+                    <li class="list-item" v-bind:data-id="item.id" v-bind:class="{'red': activeId == item.id}">
+                        {{ item.id }}.{{item.names}}
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </section>
+    <h2>操作演示</h2>
+    <ul>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="del" data-rel="vue">删除列表第一行数据数据并重新渲染</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="J-demo-btn-testModifyDataAndRefresh" data-operation="add" data-rel="vue">增加一行数据数据并重新渲染</a>
+        </li>
+    </ul>
+    <h2>操作记录</h2>
+    <ul id="actionRecord"></ul>
+</article>
+
+<script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/lib/vue/vue.js"></script>
+<script type="text/javascript" src="../lib/json2.js"></script>
+<script type="text/javascript" src="js/page/pageConfig.js"></script>
+<script type="text/javascript">
+    //当前首页
+    PageConfig.currentPage = PageConfig.PageType.StepThirdMVVM.vue;
+</script>
+<script type="text/javascript" src="js/page/page-demo-index.js"></script>
+</body>
+</html>
